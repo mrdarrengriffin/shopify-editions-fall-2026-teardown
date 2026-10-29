@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fall '26 Lab</title>
+<!-- instrumentation must run before any site module draws -->
+<script src="./instrument.js"></script>
+<link rel="stylesheet" href="./_mod/tailwind-yGPyQBNf.css">
+<link rel="stylesheet" href="./lab.css">
+<link rel="stylesheet" href="./parts.css">
+</head>
+<body class="lab">
+<header class="lab-top">
+  <div>
+    <p class="eyebrow">Local lab · Shopify's real modules + real assets from <code>fall2026/</code></p>
+    <h1>Fall '26 Lab</h1>
+    <p class="lede">Each tab runs the <b>actual production widget</b> and pulls it apart beside you: its layers rebuilt live from its own draw calls, its sprite sheets, its meshes and parts, its shader stages.</p>
+  </div>
+</header>
+
+<nav class="lab-tabs" role="tablist" aria-label="Features">
+  <a role="tab" href="#site">Whole site</a>
+  <a role="tab" href="#expo">Expo mode (3D)</a>
+  <a role="tab" href="#hero">Hero graph</a>
+  <a role="tab" href="#plaza">Isometric plaza</a>
+  <a role="tab" href="#sock">Merch sock</a>
+  <a role="tab" href="#surfacing">Product explode</a>
+  <a role="tab" href="#checkpoint">Checkpoint</a>
+  <a role="tab" href="#widgets">Section widgets</a>
+</nav>
+
+<main>
+<section id="p-site" data-panel="site" class="panel">
+  <div class="head"><h2>The whole page, from disk</h2><p>The original page booted from your mirror. Scroll it, hover the rail widgets, open the socks.</p></div>
+  <iframe class="site" data-src="./shop/" title="Shopify Editions Fall '26, served locally"></iframe>
+</section>
+
+<section id="p-expo" data-panel="expo" class="panel" hidden>
+  <div class="head"><h2>Expo mode: the whole site, in 3D</h2><p>Press <kbd>~</kbd> or the corner cube on the live site and the page tilts into a curled 3D ribbon. Every card rises into a slab, titles become extruded 3D letters, the hero graph lays flat, wireframe maths floats in the dark, and each section gets its own line-art diorama at the sides: kiosks, clothes rails, card terminals, servers. At the bottom, the page becomes a ball game.</p>
+  <p class="callout">It only runs <b>on shopify.com</b>: the site turns on Chrome’s experimental HTML-in-Canvas API with an origin-trial token that’s locked to that domain. So the tools for taking it apart run on the live site too.</p></div>
+
+  <h3 class="sub">Take it apart on the live site</h3>
+  <div class="inspect-how">
+    <ol>
+      <li>Open <a href="https://www.shopify.com/editions/fall2026?game" target="_blank" rel="noopener"><code>shopify.com/editions/fall2026?game</code></a>. The <code>?game</code> flag makes Expo expose its live config.</li>
+      <li>Open DevTools (<kbd>F12</kbd>) → <b>Console</b>, paste the inspector, press Enter. <button id="copy-inspector">Copy inspector</button> <span id="copy-state" class="hint"></span></li>
+      <li>Click <b>enter / exit</b> in the panel. It sees every GPU pipeline Expo creates as it starts.</li>
+    </ol>
+    <div class="cards4">
+      <div class="part"><b>Layers</b><p>All 16 overlay layers Expo draws, from its own config: grid, pulses, light, outlines, labels, maths, rulers, formulas, snake text, floats, cubes, 3D titles, floating buttons, inspect pills, side dioramas, section graphs. Toggle each off the live scene.</p></div>
+      <div class="part"><b>Passes</b><p>All 27 WebGPU pipelines, grouped: the curled page mesh, 3D titles, borrowed product models, overlay fills and lines, shadow casters, picking, mipmaps and live patches. Click one to stop drawing it.</p></div>
+      <div class="part"><b>Look</b><p>The mode’s own constants as sliders: curl sharpness, fold angle, camera pitch, field of view, city height, light direction, plus a slow-motion tilt.</p></div>
+      <div class="part"><b>Live</b><p>The real curl profile read off the GPU every frame, a minimap of every page upload and live patch, the GPU pick under your pointer, and a swing scope for every garment on the clothes rails.</p></div>
+    </div>
+    <p class="hint">Prefer a bookmark? Drag this to your bookmarks bar: <a class="bm" id="bookmarklet">Expo Inspector</a> (loads it from this local server; Chrome will ask once to allow shopify.com to reach your local network).</p>
+  </div>
+
+  <h3 class="sub">Before and after: the same frame with layers stripped by the inspector</h3>
+  <div class="ba"><figure><img src="./expo-shots/agentic-full.jpg" alt="Agentic section in Expo mode, all layers"><figcaption>Everything on</figcaption></figure><figure><img src="./expo-shots/agentic-stripped.jpg" alt="Same frame with dioramas, grid, rulers, formulas, outlines, titles and shadows turned off"><figcaption>Grid, dioramas, rulers, formulas, outlines, callouts, 3D titles and shadows off. What’s left is the curled page texture and the raised city.</figcaption></figure></div>
+
+  <h3 class="sub">What you’re looking at</h3>
+  <div class="gallery">
+    <figure><img src="./expo-shots/merchandising.jpg" alt=""><figcaption><b>Merchandising.</b> The page colour switches per section. Cards rise into slabs with dimension lines and callouts. At both sides: the <b>clothes rails</b>, wireframe racks of hanging garments you can drag, twist and flick.</figcaption></figure>
+    <figure><img src="./expo-shots/retail-handoff.jpg" alt=""><figcaption><b>Section handoff.</b> Orange gives way to blue at the Retail boundary. Each section’s slice of the hero graph is laid flat on the page above its 3D title, which casts a real shadow.</figcaption></figure>
+    <figure><img src="./expo-shots/payments.jpg" alt=""><figcaption><b>Payments.</b> Card terminals and conveyor dioramas at the sides, the live widgets still running inside raised slabs (they’re patched into the page texture as they animate).</figcaption></figure>
+    <figure><img src="./expo-shots/shop.jpg" alt=""><figcaption><b>Shop.</b> Buildings at the sides, the phone checkout slab, and leader lines from the section nav dots to each card.</figcaption></figure>
+    <figure><img src="./expo-shots/developer.jpg" alt=""><figcaption><b>Developer.</b> Server racks, code panels as slabs, and the page turned near-black.</figcaption></figure>
+    <figure><img src="./expo-shots/finish-pad.jpg" alt=""><figcaption><b>The end of the page.</b> Scroll past the last card and a start pad appears: hop, steer, faster, brake, and “to the finish ↑ 50,584 px”. Roll the ball all the way back up the page, eating graph nodes and words to grow.</figcaption></figure>
+  </div>
+
+  <div class="bench" style="margin-top:24px">
+    <div id="expo-curl"></div>
+    <div><h3 class="sub" style="margin-top:0">The clothes rail, in parts</h3><div class="parts-grid" id="rail-parts"></div></div>
+  </div>
+</section>
+
+<section id="p-hero" data-panel="hero" class="panel" hidden>
+  <div class="head"><h2>Hero graph</h2><p>The real hero inside the real page, and the payload it draws: every section hub, every update, every link.</p></div>
+  <iframe class="site tall" data-src="./shop/" title="Live hero graph"></iframe>
+  <div class="bench" style="margin-top:20px"><div id="hero-graph"></div><div class="notes" id="hero-stats"></div></div>
+</section>
+
+<section id="p-plaza" data-panel="plaza" class="panel" hidden>
+  <div class="head"><h2>Isometric plaza</h2><p>The real <code>mountRoom</code>. It's all 2D: one painted background, sprites from a sheet, shadows from a tinted copy of that sheet, and trees that hide people by redrawing a cut-out of the background. Click a layer tile to switch it off in the live scene; walk someone behind a tree with <b>Tree cut-outs</b> off.</p></div>
+  <div class="real-stage room" id="room-host"></div>
+  <p class="status" data-status="plaza">mounting…</p>
+  <div id="room-stack"></div>
+  <div id="room-atlas"></div>
+  <h3 class="sub">Scene art it switches between</h3>
+  <div class="layers" id="room-layers"></div>
+</section>
+
+<section id="p-sock" data-panel="sock" class="panel" hidden>
+  <div class="head"><h2>Exponential Socks</h2><p>The real WebGPU sock engine. The model has no textures and no UVs; every stitch is generated in the shader. Step through the shader stages on the live sock, and inspect the raw mesh next to it.</p></div>
+  <div class="bench">
+    <div><div class="real-stage sock" id="sock-stage"><canvas id="sock-canvas"></canvas><svg id="sock-svg" aria-hidden="true"></svg></div>
+      <p class="status" data-status="sock">mounting…</p>
+      <div class="ctl"><label><input type="checkbox" id="sock-rings" checked> engine rings + anchors</label><button id="sock-hold" aria-pressed="false">Hold spin</button><button id="sock-reset">Poster pose</button><button id="sock-side">Side</button></div></div>
+    <div class="notes">
+      <h3>Shader stages</h3><p class="hint">Each button swaps the shader's final colour for one of its own intermediate values, then remounts the engine.</p>
+      <div class="stages" id="sock-modes"></div>
+      <h3>The raw mesh</h3>
+      <div class="mv-wrap" id="sock-mesh"></div>
+      <div class="ctl" id="sock-mesh-ctl"></div>
+      <p class="readout" id="sock-mesh-info"></p>
+      <h3>The print artwork (alpha only)</h3>
+      <div class="layers small" id="sock-art"></div>
+    </div>
+  </div>
+</section>
+
+<section id="p-surfacing" data-panel="surfacing" class="panel" hidden>
+  <div class="head"><h2>Product explode</h2><p>The real widget on the left; on the right, the same four GLB files opened up. Every coloured piece is a <code>part_*</code> group that flies out along its own explode vector; ◆ markers are the empty <code>anchor_*</code> nodes the wires attach to.</p></div>
+  <div class="bench">
+    <div><div class="real-stage surf" id="surf-host"></div><p class="status" data-status="surfacing">mounting…</p></div>
+    <div class="notes">
+      <div class="ctl" id="pv-pick"></div>
+      <div class="mv-wrap tall" id="pv"></div>
+      <div class="ctl" id="pv-ctl"></div>
+      <div class="partlist" id="pv-parts"></div>
+      <div class="swatches" id="pv-mats"></div>
+    </div>
+  </div>
+</section>
+
+<section id="p-checkpoint" data-panel="checkpoint" class="panel" hidden>
+  <div class="head"><h2>Payment checkpoint</h2><p>The real particle widget: 83.3 payments a second flow at a line; exactly 3.5 a second are rejected and bounce off; the rest spring into four lanes whose spread is measured live. The tiles break each frame into what it's made of.</p></div>
+  <div class="real-stage cp" id="cp-host" data-hero-colour="#051daa"></div>
+  <p class="status" data-status="checkpoint">mounting…</p>
+  <div id="cp-stack"></div>
+  <div class="kv" id="cp-telemetry"></div>
+</section>
+
+<section id="p-widgets" data-panel="widgets" class="panel" hidden>
+  <div class="head"><h2>Section widgets</h2><p>All nine real widgets. Hover one to play it; open its layers to see what each frame is built from.</p></div>
+  <div class="wgrid" id="widget-grid"></div>
+</section>
+</main>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

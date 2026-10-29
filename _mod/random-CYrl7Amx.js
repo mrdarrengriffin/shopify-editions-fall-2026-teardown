@@ -1,0 +1,9 @@
+function u(a) {
+  let t = a | 0;
+  return () => {
+    t = (t + 1831565813) | 0;
+    let e = Math.imul(t ^ (t >>> 15), 1 | t);
+    return (e = (e + Math.imul(e ^ (e >>> 7), 61 | e)) ^ e), ((e ^ (e >>> 14)) >>> 0) / 4294967296;
+  };
+}
+export { u as s };

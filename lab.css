@@ -1,0 +1,77 @@
+/* Lab chrome. Scoped under body.lab so it sits on top of the site's own stylesheet without fighting the widgets. */
+body.lab {
+  --ink: #010419; --deck: #06103a; --signal: #8e9dff; --paper: #e9ecff; --muted: #8f97c7; --rule: rgba(142,157,255,.18); --amber: #ffbf7a;
+  background: var(--ink); color: var(--paper); margin: 0;
+  font: 15px/1.55 "Söhne", "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+body.lab code, body.lab kbd, body.lab .mono { font-family: "Söhne Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; font-size: .86em; color: var(--amber); }
+.lab-top, .lab .panel, .lab-tabs > * { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+.lab-top { padding-block: 28px 14px; max-width: 1400px; margin: 0 auto; }
+.lab .eyebrow { font: 500 11px/1 "Söhne Mono", ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--signal); margin: 0; }
+.lab h1 { font-size: clamp(36px, 5vw, 64px); line-height: .95; letter-spacing: -.03em; font-weight: 700; margin: 10px 0; }
+.lab .lede { max-width: 75ch; color: var(--muted); margin: 0; }
+.lab .lede b { color: var(--paper); font-weight: 500; }
+.lab-tabs { position: sticky; top: 0; z-index: 50; display: flex; overflow-x: auto; gap: 2px; background: rgba(1,4,25,.94); border-bottom: 1px solid var(--rule); }
+.lab-tabs a { flex: none; padding: 13px 12px; font: 500 12px/1 "Söhne Mono", ui-monospace, monospace; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; }
+.lab-tabs a[aria-selected="true"] { color: var(--paper); border-color: var(--signal); }
+.lab .panel { max-width: 1400px; margin: 0 auto; padding-block: 24px 60px; }
+.lab .head h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 700; letter-spacing: -.02em; margin: 0 0 6px; }
+.lab .head p { color: var(--muted); max-width: 80ch; margin: 0 0 18px; }
+.lab .bench { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+@media (max-width: 980px) { .lab .bench { grid-template-columns: minmax(0, 1fr); } }
+.lab iframe.site { width: 100%; height: 80vh; border: 1px solid var(--rule); border-radius: 4px; background: #000; }
+.lab iframe.stage-frame { width: 100%; aspect-ratio: 16 / 10; border: 1px solid var(--rule); border-radius: 4px; background: #010419; }
+.lab .real-stage { position: relative; width: 100%; border-radius: 4px; overflow: hidden; background: #051daa; }
+.lab .real-stage.room { aspect-ratio: 1800 / 1004; }
+.lab .real-stage.surf { aspect-ratio: 4 / 3; }
+.lab .real-stage.cp { aspect-ratio: 16 / 10; }
+.lab .real-stage.sock { aspect-ratio: 1 / 1; max-height: 78vh; margin-inline: auto; }
+.lab #sock-canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.lab #sock-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.lab #sock-svg line { stroke-width: 1; }
+.lab #sock-svg line.front { stroke: #6ff3ff; }
+.lab #sock-svg line.back { stroke: #ffd36b; stroke-dasharray: 3 3; opacity: .8; }
+.lab #sock-svg .anchor { fill: none; stroke: #fff; stroke-width: 1.5; }
+.lab .ctl { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; font: 12px "Söhne Mono", ui-monospace, monospace; color: var(--muted); }
+.lab .ctl button { font: inherit; color: var(--paper); background: var(--deck); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.lab .ctl button[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+.lab .status { font: 12px/1.5 "Söhne Mono", ui-monospace, monospace; color: var(--signal); margin: 8px 0 0; }
+.lab .status.bad { color: #ff9a8a; }
+.lab .readout { font: 11px/1.5 "Söhne Mono", ui-monospace, monospace; color: var(--muted); margin: 6px 0 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.lab .notes { min-width: 0; display: grid; gap: 14px; }
+.lab .notes h3, .lab h3.sub { font: 500 11px/1 "Söhne Mono", ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--signal); margin: 6px 0 4px; }
+.lab h3.sub { margin: 36px 0 14px; }
+.lab .notes h4 { margin: 14px 0 6px; font-size: 14px; }
+.lab ol.steps { margin: 0; padding-left: 20px; display: grid; gap: 10px; color: var(--muted); }
+.lab ol.steps b { color: var(--paper); font-weight: 600; }
+.lab .src { display: block; font: 11.5px/1.5 "Söhne Mono", ui-monospace, monospace; color: #6b74a8; margin-top: 3px; }
+.lab table.k { width: 100%; border-collapse: collapse; font-size: 13px; }
+.lab table.k td { border-top: 1px solid var(--rule); padding: 6px 8px 6px 0; vertical-align: top; overflow-wrap: anywhere; }
+.lab table.k td:first-child { color: var(--muted); width: 38%; }
+.lab table.k td:last-child { font-family: "Söhne Mono", ui-monospace, monospace; font-size: 12px; color: var(--amber); }
+.lab pre.code { background: #020722; border: 1px solid var(--rule); border-radius: 4px; padding: 12px; overflow: auto; max-height: 280px; font: 11.5px/1.5 "Söhne Mono", ui-monospace, monospace; color: #cfd5ff; }
+.lab .bars { display: grid; gap: 4px; }
+.lab .bar { display: grid; grid-template-columns: 110px minmax(0, 1fr) 32px; gap: 8px; align-items: center; font-size: 12.5px; color: var(--muted); }
+.lab .bar i { display: block; height: 8px; width: var(--w); background: var(--signal); border-radius: 2px; }
+.lab .bar b { font: 12px "Söhne Mono", ui-monospace, monospace; color: var(--paper); font-weight: 400; text-align: right; }
+.lab .layers { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.lab .layer { margin: 0; background: var(--deck); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.lab .layer img { display: block; width: 100%; height: 170px; object-fit: contain; background: repeating-conic-gradient(#0b1440 0 25%, #08102f 0 50%) 0 0 / 16px 16px; }
+.lab .layer figcaption { font: 11px "Söhne Mono", ui-monospace, monospace; color: var(--muted); padding: 8px 10px; overflow-wrap: anywhere; }
+.lab .glbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.lab .glb { background: var(--deck); border: 1px solid var(--rule); border-radius: 4px; padding: 14px; min-width: 0; }
+.lab .glb h4 { margin: 0 0 4px; font-size: 15px; }
+.lab .glb h4 span { display: block; font: 11px "Söhne Mono", ui-monospace, monospace; color: var(--muted); font-weight: 400; margin-top: 3px; }
+.lab .glb p { margin: 0 0 8px; font-size: 12px; color: var(--muted); }
+.lab .wgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.lab .wcard h3 { font-size: 16px; margin: 10px 0 2px; }
+.lab .wcard h3 span { font: 11px "Söhne Mono", ui-monospace, monospace; color: var(--muted); font-weight: 400; margin-left: 6px; }
+.lab .wface { position: relative; aspect-ratio: 258 / 163; background: var(--card); border-radius: 4px; overflow: hidden; }
+.lab .whost { position: absolute; inset: 0; }
+.lab .wstatus { font: 11px "Söhne Mono", ui-monospace, monospace; color: var(--signal); margin: 2px 0 0; }
+.lab .wstatus.bad { color: #ff9a8a; }
+.lab .srcgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+.lab .srcgrid h3 { font: 500 11px/1 "Söhne Mono", ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--signal); margin: 0 0 8px; }
+.lab .srcgrid a { display: block; color: var(--paper); font: 12.5px/1.9 "Söhne Mono", ui-monospace, monospace; text-decoration: none; border-bottom: 1px solid var(--rule); }
+.lab .srcgrid a:hover { color: var(--signal); }
+.lab iframe.stage-frame.wide { aspect-ratio: auto; height: min(78vh, 760px); }
